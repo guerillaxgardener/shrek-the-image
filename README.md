@@ -15,7 +15,7 @@ Until next time, fair well and good luck on your future endeavors.
 ## Getting Started
 
 1. Clone the repository to your local machine using the command
-`git clone` https://github.com/guerillaxgardener/shrek-app
+`git clone` https://github.com/guerillaxgardener/shrek-the-image.git
 
 2. Navigate to the project directory using the command `cd shrek-app`
 
