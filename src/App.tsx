@@ -1,26 +1,56 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface Props {}
+interface State {
+    image: any,
+    countdown: number | null
 }
 
-export default App;
+class ShrekApp extends React.Component<Props, State> {
+    state: State = {
+        image: null,
+        countdown: 3
+    }
+
+    shrekImages = [
+        'shrek1.jpg',
+        'shrek2.jpg',
+        'shrek3.jpg',
+        // add more images here
+    ];
+
+    handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedImage = e.target.files![0];
+        this.setState({ image: selectedImage });
+
+        let count = 3;
+        const intervalId = setInterval(() => {
+            this.setState({ countdown: count });
+            count--;
+            if (count < 0) {
+                clearInterval(intervalId);
+                this.setState({ countdown: null });
+            }
+        }, 1000);
+    }
+
+    handleRandomImage = () => {
+        const randomIndex = Math.floor(Math.random() * this.shrekImages.length);
+        const randomImage = this.shrekImages[randomIndex];
+        return randomImage;
+    }
+
+    render() {
+        return (
+            <div>
+                <input type="file" onChange={this.handleImageSelect} />
+                {this.state.image && <img src={URL.createObjectURL(this.state.image)} alt="Selected Image" />}
+                {this.state.countdown && <p>{this.state.countdown}</p>}
+                {!this.state.countdown && <img src={this.handleRandomImage()} alt="Random Shrek Image" />}
+            </div>
+        );
+    }
+}
+
+export default ShrekApp;
